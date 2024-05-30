@@ -2,6 +2,9 @@ package br.com.blue.guard.api.model;
 
 import java.util.Set;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import br.com.blue.guard.api.model.dto.LoginRequest;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -18,6 +21,7 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @Entity
@@ -25,6 +29,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder
 @Getter
+@Setter
 @ToString
 @EqualsAndHashCode
 @Table(name = "blue_guard_users")
@@ -49,4 +54,8 @@ public class User {
                                                     joinColumns = @JoinColumn(name = "user_id"),
                                                     inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
+
+    public boolean isLoginCorrect(LoginRequest loginRequest, PasswordEncoder passwordEncoder) {
+        return passwordEncoder.matches(loginRequest.password(), this.password);
+    }
 }
