@@ -13,6 +13,7 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @Entity
@@ -20,6 +21,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder
 @Getter
+@Setter
 @ToString
 @EqualsAndHashCode
 @Table(name = "blue_guard_roles")
