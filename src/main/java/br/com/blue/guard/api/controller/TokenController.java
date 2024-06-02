@@ -1,6 +1,7 @@
 package br.com.blue.guard.api.controller;
 
 import java.time.Instant;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ import br.com.blue.guard.api.repository.UserRepository;
 
 @RestController
 public class TokenController {
-    
+
     @Autowired
     JwtEncoder jwtEncoder;
     @Autowired
@@ -29,23 +30,30 @@ public class TokenController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
-
         var user = userRepository.findByUsername(loginRequest.username());
 
         if (user.isEmpty() || !user.get().isLoginCorrect(loginRequest, bCryptPasswordEncoder)) {
-            throw new BadCredentialsException("user or password is invalid!");
+            throw new BadCredentialsException("User or password is invalid!");
         }
 
         var now = Instant.now();
         var expiresIn = 3600L;
 
-        var claims = JwtClaimsSet.builder().issuer("mybackend").subject(user.get().getId().toString()).issuedAt(now).expiresAt(now.plusSeconds(expiresIn)).build();
+        var scopes = user.get().getRoles()
+                .stream()
+                .map(role -> role.getName().name())
+                .collect(Collectors.joining(" "));
+
+        var claims = JwtClaimsSet.builder()
+                .issuer("mybackend")
+                .subject(user.get().getId().toString())
+                .issuedAt(now)
+                .expiresAt(now.plusSeconds(expiresIn))
+                .claim("scope", scopes)
+                .build();
 
         var jwtValue = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
 
         return ResponseEntity.ok(new LoginResponse(jwtValue, expiresIn));
     }
-
-
-
 }
