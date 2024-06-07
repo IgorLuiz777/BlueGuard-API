@@ -10,6 +10,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -42,6 +43,25 @@ public class SecurityConfig {
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers(HttpMethod.POST, "/login").permitAll()
                 .requestMatchers(HttpMethod.POST, "/users").permitAll()
+                .requestMatchers(HttpMethod.GET, "/swagger-ui/index.html").permitAll()
+                .requestMatchers(HttpMethod.GET, "/swagger-ui/index.css").permitAll()
+                .requestMatchers(HttpMethod.GET, "/swagger-ui/swagger-ui.css").permitAll()
+                .requestMatchers(HttpMethod.GET, "/swagger-ui.css").permitAll()
+                .requestMatchers(HttpMethod.GET, "/swagger-ui/swagger-ui-bundle.js").permitAll()
+                .requestMatchers(HttpMethod.GET, "/swagger-ui-bundle.js").permitAll()
+                .requestMatchers(HttpMethod.GET, "/v3/api-docs/swagger-config").permitAll()
+                .requestMatchers(HttpMethod.GET, "/v3/api-docs").permitAll()
+                .requestMatchers(HttpMethod.GET, "/swagger-ui/swagger-ui-standalone-preset.js").permitAll()
+                .requestMatchers(HttpMethod.GET, "/swagger-ui/swagger-initializer.js").permitAll()
+                .requestMatchers(HttpMethod.GET, "/swagger-ui/favicon-32x32.png").permitAll()
+                .requestMatchers(HttpMethod.DELETE, "/swagger-ui/index.html").permitAll()
+                .requestMatchers(HttpMethod.HEAD, "/swagger-ui/index.html").permitAll()
+                .requestMatchers(HttpMethod.OPTIONS, "/swagger-ui/index.html").permitAll()
+                .requestMatchers(HttpMethod.PATCH, "/swagger-ui/index.html").permitAll()
+                .requestMatchers(HttpMethod.POST, "/swagger-ui/index.html").permitAll()
+                .requestMatchers(HttpMethod.PUT, "/swagger-ui/index.html").permitAll()
+                .requestMatchers(HttpMethod.TRACE, "/swagger-ui/index.html").permitAll()
+                .requestMatchers(HttpMethod.GET, "/docs").permitAll()
                 .anyRequest().authenticated())
             .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

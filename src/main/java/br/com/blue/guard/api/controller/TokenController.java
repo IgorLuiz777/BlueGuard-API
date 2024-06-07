@@ -17,8 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.blue.guard.api.model.dto.LoginRequest;
 import br.com.blue.guard.api.model.dto.LoginResponse;
 import br.com.blue.guard.api.repository.UserRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
+@Tag(name = "Token", description = "Endpoints para autenticação e geração de token de acesso")
 public class TokenController {
 
     @Autowired
@@ -29,11 +35,16 @@ public class TokenController {
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
+    @Operation(summary = "Realizar login e obter token de acesso")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Login bem-sucedido"),
+        @ApiResponse(responseCode = "401", description = "Credenciais inválidas")
+    })
+    public ResponseEntity<LoginResponse> login(@RequestBody @Parameter(description = "Credenciais de login") LoginRequest loginRequest) {
         var user = userRepository.findByUsername(loginRequest.username());
 
         if (user.isEmpty() || !user.get().isLoginCorrect(loginRequest, bCryptPasswordEncoder)) {
-            throw new BadCredentialsException("User or password is invalid!");
+            throw new BadCredentialsException("Usuário ou senha inválidos!");
         }
 
         var now = Instant.now();
