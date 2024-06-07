@@ -1,11 +1,13 @@
 package br.com.blue.guard.api.controller;
 
+import static org.springframework.http.HttpStatus.CREATED;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,32 +36,32 @@ public class BeachReportController {
     private BeachReportService beachReportService;
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(CREATED)
     @Operation(summary = "Criar um novo relatório de praia")
-    public BeachReport createReport(@RequestBody BeachReport beachReport, JwtAuthenticationToken jwtToken) {
+    public EntityModel<BeachReport> createReport(@RequestBody BeachReport beachReport, JwtAuthenticationToken jwtToken) {
         return beachReportService.createReport(beachReport, jwtToken);
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar um relatório de praia existente")
-    public ResponseEntity<BeachReport> updateReport(@PathVariable Long id, @RequestBody BeachReport updatedBeachReport,
+    public ResponseEntity<EntityModel<BeachReport>> updateReport(@PathVariable Long id, @RequestBody BeachReport updatedBeachReport,
             JwtAuthenticationToken jwtToken) {
-        BeachReport updatedReport = beachReportService.updateReport(id, updatedBeachReport, jwtToken);
+        EntityModel<BeachReport> updatedReport = beachReportService.updateReport(id, updatedBeachReport, jwtToken);
         return ResponseEntity.ok(updatedReport);
     }
 
     @GetMapping
     @Operation(summary = "Obter todos os relatórios de praia")
-    public ResponseEntity<Page<BeachReport>> getAllReports(
+    public ResponseEntity<PagedModel<EntityModel<BeachReport>>> getAllReports(
             @PageableDefault(sort = "timestamp", direction = Direction.DESC) Pageable pageable) {
-        Page<BeachReport> page = beachReportService.getAllReports(pageable);
+        PagedModel<EntityModel<BeachReport>> page = beachReportService.getAllReports(pageable);
         return ResponseEntity.ok(page);
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Obter um relatório de praia pelo ID")
-    public ResponseEntity<BeachReport> getReportById(@PathVariable Long id) {
-        BeachReport report = beachReportService.getReportById(id);
+    public ResponseEntity<EntityModel<BeachReport>> getReportById(@PathVariable Long id) {
+        EntityModel<BeachReport> report = beachReportService.getReportById(id);
         return ResponseEntity.ok(report);
     }
 
