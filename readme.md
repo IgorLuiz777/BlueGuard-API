@@ -3,7 +3,7 @@
 **BlueGuard** é um aplicativo que permite aos usuários monitorar e reportar a condição das praias, bem como registrar observações de vida marinha. A plataforma incentivará a ciência cidadã, promovendo a participação ativa do público na conservação marinha.
 
 Confira o vídeo do pitch do nosso projeto no link abaixo:  
-[Assista ao Pitch](https://www.youtube.com/watch?v=CMNkz9dcRtQ)
+[Assista ao Pitch](https://www.youtube.com/watch?v=CMNkz9dcRtQ) <br>
 [Assista ao Vídeo Explicativo](https://youtu.be/RF9C_YuRwRQ)
 
 [DEPLOY SITE](https://blue-guard-web.vercel.app/)
