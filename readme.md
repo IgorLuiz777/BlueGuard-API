@@ -1,9 +1,12 @@
 # BlueGuard
 
-**IntelliStocks** é uma solução inovadora de gerenciamento de inventário que utiliza aprendizado de máquina e análise de dados para antecipar demandas, otimizar estoques e automatizar reabastecimentos. Com uma interface intuitiva, oferece insights valiosos para a tomada de decisões informadas, impulsionando a eficiência operacional e a competitividade das empresas.
+**BlueGuard** é um aplicativo que permite aos usuários monitorar e reportar a condição das praias, bem como registrar observações de vida marinha. A plataforma incentivará a ciência cidadã, promovendo a participação ativa do público na conservação marinha.
 
 Confira o vídeo do pitch do nosso projeto no link abaixo:  
-[Assista ao Pitch](https://youtu.be/)
+[Assista ao Pitch](https://www.youtube.com/watch?v=CMNkz9dcRtQ)
+[Assista ao Vídeo Explicativo](https://youtu.be/RF9C_YuRwRQ)
+
+[DEPLOY SITE](https://blue-guard-web.vercel.app/)
 
 
 #### Equipe:
